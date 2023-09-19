@@ -113,6 +113,17 @@ class PagingController<PageKeyType, ItemType>
   /// key to `null`.
   void appendLastPage(List<ItemType> newItems) => appendPage(newItems, null);
 
+  /// Prepends [newItems] to the previously loaded ones
+  void prependPage(List<ItemType> newItems) {
+    final previousItems = value.itemList ?? [];
+    final itemList = newItems + previousItems;
+    value = PagingState<PageKeyType, ItemType>(
+      itemList: itemList,
+      error: null,
+      nextPageKey: nextPageKey,
+    );
+  }
+
   /// Erases the current error.
   void retryLastFailedRequest() {
     error = null;
